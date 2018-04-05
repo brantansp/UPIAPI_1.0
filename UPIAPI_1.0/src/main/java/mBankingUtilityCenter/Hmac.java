@@ -9,8 +9,12 @@ import java.util.Map;
 import java.util.Random;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-//import org.apache.commons.lang.StringUtils;
-//check
+
+/**
+ * 
+ * @author brantansp
+ *
+ */
 public class Hmac {
 
 	  private Map<String, String> integrityCheckRequired;
@@ -59,15 +63,11 @@ public class Hmac {
 	  
 	  public static String Hmacing(String fullRequest, String halfRequest, BigInteger uniNum) throws InvalidKeyException, SignatureException, NoSuchAlgorithmException
 	  {
-		  //System.out.println("full req : "+fullRequest);
-		  //System.out.println("half req : "+halfRequest);
-		  //System.out.println("uniqueno : "+uniNum);
 		  BigInteger encryptedKey = uniNum.modPow(new BigInteger(publickey, 10) , new BigInteger(modulus, 10));
-		  //System.out.println("encryptedKey : "+encryptedKey);
 		  String text = ""+uniNum; 
 		  String hashedRequest = calculateRFC2104HMAC(fullRequest, text);
 		  String FinalRequest=hashedRequest+ "*!"+halfRequest+encryptedKey;
-		 //System.out.println("FinalRequest : " +FinalRequest);
+		  //System.out.println("FinalRequest : " +FinalRequest);
 		  return FinalRequest;
 	  }
 	  

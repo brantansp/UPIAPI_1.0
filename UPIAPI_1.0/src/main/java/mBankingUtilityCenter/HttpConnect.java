@@ -1,57 +1,83 @@
 package mBankingUtilityCenter;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.invoke.MethodHandles;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.reporters.jq.Main;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.cert.Certificate;
-import java.util.Properties;
-import java.io.*;
+/**
+ * 
+ * @author brantansp
+ *
+ */
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLPeerUnverifiedException;
+public class HttpConnect {
 
-public class HttpConnect extends ExtentManager {
-
-	public static Properties prop=getProperty();
-	protected static Log log = LogFactory.getLog(MethodHandles.lookup().lookupClass().getSimpleName());
+	private static Log log = LogFactory.getLog(MethodHandles.lookup().lookupClass().getSimpleName());
 	
-	public String Post(String request) throws IOException
+	public static void main(String[] args) throws IOException {
+		HttpConnect conn=new HttpConnect();	
+	}
+	
+	static String targetURL="http://10.144.20.71:9095/UPIService?bridgeEndpoint=true";
+	
+	public static String postXML(String urlParams) throws IOException
 	{
-		//http://10.44.120.60:	8040/ubimpayportal/servlet/MQSender?request=
-		URL url = new URL(prop.getProperty("GprsURL")+prop.getProperty("servlet")+request);
-		//URL url = new URL("http://10.44.120.60:8040/ubimpayportal/servlet/MQSender?request="+request);
-		   
-	       StringBuilder postData = new StringBuilder();
-	   
-	        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+        java.net.URL url;
+        HttpURLConnection connection = null;  
+        try {
+          url = new URL(targetURL);
+          connection = (HttpURLConnection)url.openConnection();
+          connection.setRequestMethod("POST");
+          connection.setRequestProperty("SOAPAction", "");
+          connection.setUseCaches (false);
+          connection.setDoInput(true);
+          connection.setDoOutput(true);
+          
+          //Send request
+          DataOutputStream wr = new DataOutputStream (connection.getOutputStream ());
+          wr.writeBytes (urlParams);
+          wr.flush ();
+          wr.close ();
+          //Get Response    
+          InputStream is ;
+          log.info("response code="+connection.getResponseCode());
+          if(connection.getResponseCode()<=400){
+              is=connection.getInputStream();
+          }else{
+              /* error from server */
+              is = connection.getErrorStream();
+        } 
+         // is= connection.getInputStream();
+          BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+          String line;
+          StringBuffer response = new StringBuffer(); 
+          while((line = rd.readLine()) != null) {
+            response.append(line);
+            response.append('\r');
+          }
+          rd.close();
+          log.info("response"+response.toString());
+          return response.toString();
 
-	        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-	        conn.setRequestMethod("POST");
-	        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-	        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-	        conn.setDoOutput(true);
-	        conn.getOutputStream().write(postDataBytes);
-	        String response = null;
-			try {
-				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-				response = in.readLine();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				log.error(e);
-				//e.printStackTrace();
-			}
-	        return response;
-	    }
+        } catch (Exception e) {
+        	log.info("here"+e);
+          return null;
+
+        } finally {
+
+          if(connection != null) {
+            connection.disconnect(); 
+          }
+        }
+	}
 
 }
 

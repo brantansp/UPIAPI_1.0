@@ -2,12 +2,19 @@ package mBankingUtilityCenter;
 
 import static org.testng.Assert.assertTrue;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
@@ -16,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Scanner;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.apache.commons.logging.Log;
@@ -25,6 +33,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -49,10 +58,12 @@ public class ExtentManager{
 	SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd"); 
 	SimpleDateFormat timeFormatter = new SimpleDateFormat("HHmmss"); 
 	Date date = new Date();  
-	
+	public static Properties dbprop;
+	static String targetURL="http://10.144.20.71:9095/UPIService?bridgeEndpoint=true";
+
 	@BeforeSuite
 	public void setUp()throws FileNotFoundException{
-      	    log.info("Running Mobile banking API Automation testing on mPAY 4.0"+"\r\n"); 
+      	    log.info("Running UPI API Automation testing 1.0"+"\r\n"); 
         	File dir = new File(System.getProperty("user.dir")+"\\output\\ExtentReport\\"+dateFormatter.format(date));
         	if (!dir.exists())
         	{
@@ -87,8 +98,6 @@ public class ExtentManager{
 	@AfterSuite
 	public void endReport(){
 		 extent.flush();
-		/* 
-                extent.flush();
                 Scanner sc = new Scanner (System.in);
                 boolean loop = true;
                 while (loop)
@@ -133,7 +142,7 @@ public class ExtentManager{
                         }
                 } 
                 sc.close();
-  */}
+    }
 	
 	public static Properties getProperty()
 	{
@@ -165,11 +174,12 @@ public class ExtentManager{
 		assertTrue(response.substring(2,4).contains("00"));		
 	}
 	
-	public static String sendReq (String Request, String txnType) throws IOException, SQLException
-	{
+	//public static String sendReq (String Request, String txnType) throws IOException, SQLException
+	{/*
 		log.info("******************************START******************************");
 	    log.info("Request : " + txnType);
-	    BigInteger uniNum = RandomNumGenerator.generate();
+
+	    BigInteger uniNum = RandomNumGenerator.generate(32);
 	  	if (prop.getProperty("HMAC").equals("Y"))
 		{
 		  try {
@@ -187,7 +197,7 @@ public class ExtentManager{
 		}
 
 			 HttpConnect obj=new HttpConnect();
-			response = obj.Post(Request);
+			response = obj.postXML(Request);
 			log.info("Response received from Server : "+response);
      	if (response.contains("TXNID"))
 			{
@@ -207,7 +217,7 @@ public class ExtentManager{
      	}
 	log.info("******************************END********************************\r\n");
 	return response;
-	}
+	*/}
 	
 	public static String sendReq2 (String Request, String req2,String txnType, BigInteger uniNum) throws IOException, SQLException
 	{
@@ -230,7 +240,7 @@ public class ExtentManager{
 		}
 
 			 HttpConnect obj=new HttpConnect();
-			response = obj.Post(Request);
+			response = obj.postXML(Request);
 			log.info("Response received from Server : "+response);
      	if (response.contains("TXNID"))
 			{
@@ -245,6 +255,78 @@ public class ExtentManager{
 	log.info("******************************END********************************\r\n");
 	return response;
 	}
+	
+
+	    public static String postXML(String urlParams) throws IOException
+	    {
+	    	log.info("******************************START******************************");
+            log.info("Request : "+urlParams);
+	        java.net.URL url;
+	        HttpURLConnection connection = null;  
+	        try {
+	          url = new URL(targetURL);
+	          connection = (HttpURLConnection)url.openConnection();
+	          connection.setRequestMethod("POST");
+	          connection.setRequestProperty("SOAPAction", "");
+	          connection.setUseCaches (false);
+	          connection.setDoInput(true);
+	          connection.setDoOutput(true);
+	          
+	          //Send request
+	          DataOutputStream wr = new DataOutputStream (connection.getOutputStream ());
+	          wr.writeBytes (urlParams);
+	          wr.flush ();
+	          wr.close ();
+	          //Get Response    
+	          InputStream is ;
+	          log.info("response code="+connection.getResponseCode());
+	          if(connection.getResponseCode()<=400){
+	              is=connection.getInputStream();
+	          }else{
+	              /* error from server */
+	              is = connection.getErrorStream();
+	        } 
+	         // is= connection.getInputStream();
+	          BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+	          String line;
+	          StringBuffer response = new StringBuffer(); 
+	          while((line = rd.readLine()) != null) {
+	            response.append(line);
+	            response.append('\r');
+	          }
+	          rd.close();
+	          log.info("response"+response.toString());
+	          return response.toString();
+	        } catch (Exception e) {
+	        	log.info("here"+e);
+	          return null;
+	        } finally {
+	          if(connection != null) {
+	            connection.disconnect(); 
+	          }
+	      	log.info("******************************END********************************\r\n");
+	        }
+	    }
+
+	    public static String getResCode (String response)
+	    {
+	    	String resCode = response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>"));
+	    	return resCode;
+	    }
+	    
+
+	    public static String getAccNo (String response)
+	    {
+	    	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+12, response.lastIndexOf("</java:AccNo>"));
+	    	return accno;
+	    }
+	   
+	    public static String getTranID (String response)
+	    {
+	    	String tranID = response.substring(response.lastIndexOf("<java:MsgId>")+12, response.lastIndexOf("</java:MsgId>"));
+	    	return tranID;
+	    }
+	    
 }
 
 
