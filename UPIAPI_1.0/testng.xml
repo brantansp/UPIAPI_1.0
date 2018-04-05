@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name = "Positive Transaction flow" >
+<listeners>
+<listener class-name="mBankingUtilityCenter.AnotationListner"></listener>
+</listeners>
+    <test name = "Non- FInancial transaction">
+      <classes>
+          <class name = "mBankingControlCenter.NonFinancialTransactions"/>
+      </classes>        
+    </test>
+    <test name = "IMPSTransactions">
+      <classes>
+          <class name="mBankingControlCenter.IMPSTransactions" />
+      </classes>        
+    </test> 
+          <test name = "FundTransferTransactions">
+      <classes>
+          <class name="mBankingControlCenter.FundTransferTransactions" />
+      </classes>        
+    </test> 
+</suite>
