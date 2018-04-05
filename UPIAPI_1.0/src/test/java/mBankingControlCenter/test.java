@@ -39,14 +39,7 @@ public class test extends ExtentManager {
 	static String pin=null;
 	private static Log log = LogFactory.getLog(MethodHandles.lookup().lookupClass().getSimpleName());
 	
-	static{
-		try {
-			prop =XMLBuilder.loadObjects();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 	@Test(priority = 0)
 	public static void AddBank() throws IOException, SQLException {
 		response = postXML(XMLBuilder.CollectMoneyUNBI());

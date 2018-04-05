@@ -19,35 +19,15 @@ import org.apache.commons.logging.LogFactory;
  *
  */
 
-public class XMLBuilder {
+public class XMLBuilder extends ExtentManager{
 
 	private static Log log = LogFactory.getLog(MethodHandles.lookup().lookupClass().getSimpleName());
     
 	/*
 	 * main method to unit test page components
 	 */
-	protected static Properties prop;
-	public static Properties dbprop;
-	
-	public static Properties loadObjects() throws FileNotFoundException, IOException{
-		prop = new Properties();
-		prop.load(new FileInputStream(new File(System.getProperty("user.dir")+"\\Requests\\requestsparam.properties")));
-		dbprop = new  Properties();
-		dbprop.load(new FileInputStream(new File(System.getProperty("user.dir")+"\\property\\UPI.db")));
-return prop;
-	}
-	
-	static{
-		try {
-			loadObjects();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public static void main(String[] args) throws Exception {
-		
-	}
+	protected static Properties prop=getProperty();
+
 	
 	/*
 	 * To get the parameterized request template from static store for UPI block

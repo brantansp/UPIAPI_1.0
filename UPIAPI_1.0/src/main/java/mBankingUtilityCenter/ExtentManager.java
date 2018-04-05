@@ -98,7 +98,7 @@ public class ExtentManager{
 	@AfterSuite
 	public void endReport(){
 		 extent.flush();
-                Scanner sc = new Scanner (System.in);
+          /*      Scanner sc = new Scanner (System.in);
                 boolean loop = true;
                 while (loop)
                 {
@@ -142,7 +142,7 @@ public class ExtentManager{
                         }
                 } 
                 sc.close();
-    }
+    */}
 	
 	public static Properties getProperty()
 	{
@@ -168,95 +168,6 @@ public class ExtentManager{
 		System.out.println("*******************");
 	}
 	
-	public static void assertResponse(String response)
-	{
-		//log.info(response.substring(2, 4));
-		assertTrue(response.substring(2,4).contains("00"));		
-	}
-	
-	//public static String sendReq (String Request, String txnType) throws IOException, SQLException
-	{/*
-		log.info("******************************START******************************");
-	    log.info("Request : " + txnType);
-
-	    BigInteger uniNum = RandomNumGenerator.generate(32);
-	  	if (prop.getProperty("HMAC").equals("Y"))
-		{
-		  try {
-			Request=Hmac.Hmacing(Request+uniNum, Request, uniNum);
-			log.info("Hmaced Request : "+Request);
-		        } catch (InvalidKeyException | SignatureException | NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			log.error(e);
-		   }
-		}
-		else {
-			Request = Request +";"+uniNum;
-			log.info("Non-Hmac request : "+Request);
-			log.info(" Request");
-		}
-
-			 HttpConnect obj=new HttpConnect();
-			response = obj.postXML(Request);
-			log.info("Response received from Server : "+response);
-     	if (response.contains("TXNID"))
-			{
-				transactionID= response.substring(response.lastIndexOf("TXNID:")+6, response.lastIndexOf("TXNID:")+18);
-				log.info("Transaction ID : "+transactionID);
-				if("Y".equals(prop.getProperty("dbReport")))
-				{
-					dbResult = dbTransactionlog.fetchRecord(transactionID);
-					WriteToCSVFile.reportGeneration( txnType, dbResult);
-				}		
-			}
-     	if(response.substring(2,4).contains("IM"))
-     	{
-     		log.info("mPIN is invalid : Please enter a valid mPIN and start the test");
-     		log.info("Program is terminating");
-     		System.exit(1);
-     	}
-	log.info("******************************END********************************\r\n");
-	return response;
-	*/}
-	
-	public static String sendReq2 (String Request, String req2,String txnType, BigInteger uniNum) throws IOException, SQLException
-	{
-		log.info("******************************START******************************");
-	    log.info("Request : " + txnType);
-	  	if (prop.getProperty("HMAC").equals("Y"))
-		{
-		  try {
-			Request=Hmac.Hmacing(req2+uniNum, Request, uniNum);
-			log.info("Hmaced Request : "+Request);
-		        } catch (InvalidKeyException | SignatureException | NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			log.error(e);
-		   }
-		}
-		else {
-			Request = Request +";"+uniNum;
-			log.info("Non-Hmac request : "+Request);
-			log.info(" Request");
-		}
-
-			 HttpConnect obj=new HttpConnect();
-			response = obj.postXML(Request);
-			log.info("Response received from Server : "+response);
-     	if (response.contains("TXNID"))
-			{
-				transactionID= response.substring(response.lastIndexOf("TXNID:")+6, response.lastIndexOf("TXNID:")+18);
-				log.info("Transaction ID : "+transactionID);
-				if("Y".equals(prop.getProperty("dbReport")))
-				{
-					dbResult = dbTransactionlog.fetchRecord(transactionID);
-					WriteToCSVFile.reportGeneration( dbResult);
-				}		
-			}
-	log.info("******************************END********************************\r\n");
-	return response;
-	}
-	
-
 	    public static String postXML(String urlParams) throws IOException
 	    {
 	    	log.info("******************************START******************************");

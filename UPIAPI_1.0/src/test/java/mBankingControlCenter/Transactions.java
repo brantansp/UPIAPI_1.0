@@ -34,7 +34,7 @@ public class Transactions extends ExtentManager{
 	static HttpConnect obj=new HttpConnect();
 	public static ExtentReports extent;
 	public static ExtentTest extentLogger;
-	protected static Properties prop;
+	protected static Properties prop = getProperty();
 	public static Properties dbprop;
 	public static String rrn;
 	private static String dbResult[];
@@ -45,14 +45,6 @@ public class Transactions extends ExtentManager{
 	static String pin=null;
 	private static Log log = LogFactory.getLog(MethodHandles.lookup().lookupClass().getSimpleName());
 	
-	static{
-		try {
-			prop =XMLBuilder.loadObjects();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	@Test(priority = 0)
 	public static void AddBank() throws IOException, SQLException {
