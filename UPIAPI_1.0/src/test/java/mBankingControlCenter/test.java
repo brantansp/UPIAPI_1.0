@@ -40,54 +40,170 @@ public class test extends ExtentManager {
 	private static Log log = LogFactory.getLog(MethodHandles.lookup().lookupClass().getSimpleName());
 	
 
-	/*@Test(priority = 0)
+	@Test(priority = 0)
 	public static void AddBank() throws IOException, SQLException {
 		response = postXML(XMLBuilder.CollectMoneyUNBI());
 		String RRN = response.substring(response.lastIndexOf("<java:TxnId>")+12 , response.lastIndexOf("</java:TxnId>"));
 		System.out.println(RRN);
 		response = postXML(XMLBuilder.ConfirmCollectMoneyUNBI(RRN));	
-	}*/
+	}
+ 	
 	
-	public static void main(String[] args) {
+	
+		//assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	
+public static void main(String args[])
+{
+	/*try {
+		response = HttpConnect.postXML(XMLBuilder.AddBank());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	if (response.contains("000")) // check for element to present
+	{
+	String bankname = response.substring(response.lastIndexOf("<java:BankName>")+8, response.lastIndexOf("|"));		
 		try {
-			response = HttpConnect.postXML(XMLBuilder.AddBank());
+			response = postXML(XMLBuilder.ListBankAcc("United Bank of India"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String bankid = response.substring(response.lastIndexOf("<java:BankName>")+36, response.lastIndexOf("</java:BankName>"));		
-		try {
-			response = postXML(XMLBuilder.ViewRegAccnts(bankid));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String accno = response.substring(response.lastIndexOf("<AccNo>")+7, response.lastIndexOf("</AccNo>"));
+	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+7, response.lastIndexOf("</java:AccNo>"));
 		try {
 			response = postXML(XMLBuilder.RegisterAcc(accno));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- 	
-/*		
-		try {
-			response = postXML(XMLBuilder.CollectMoneyUNBI());
+		assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	}*/
+	
+	
+	
+/*try {
+			response = postXML(XMLBuilder.ViewRegAccnts());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String RRN = response.substring(response.lastIndexOf("<java:TxnId>")+12 , response.lastIndexOf("</java:TxnId>"));
-		System.out.println(RRN);
+	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+12, response.lastIndexOf("</java:AccNo>"));
 		try {
-			response = postXML(XMLBuilder.ConfirmCollectMoneyUNBI(RRN));
+			response = postXML(XMLBuilder.GenerateVirAddr("0389010344822"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
-		//assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+		}
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	*/
+	
+/*	try {
+		response = postXML(XMLBuilder.ViewRegAccnts());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
+	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+12, response.lastIndexOf("</java:AccNo>"));
+	try {
+		response = postXML(XMLBuilder.MobBankRegistration("0389010344822"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	*/
+	
+/*	
+	try {
+		response = postXML(XMLBuilder.ViewRegAccnts());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	String accno = response.substring(response.lastIndexOf("<AccNo>")+7, response.lastIndexOf("</AccNo>"));
+	try {
+		response = postXML(XMLBuilder.RemoveRegBankAcc(accno));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	*/
+	
+	
+	/*try {
+		response = postXML(XMLBuilder.RegisterPayeeAcc());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));	
+	*/
+	
+/*	try {
+		response = postXML(XMLBuilder.RegisterPayeeAcc());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));	
+*/
+	
+/*	try {
+		response = postXML(XMLBuilder.ViewRegAccnts());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+12, response.lastIndexOf("</java:AccNo>"));
+	try {
+		response = postXML(XMLBuilder.BalanceInq("0389010502566"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	*/
+	
+	try {
+		response = postXML(XMLBuilder.ViewRegAccnts());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+7, response.lastIndexOf("</java:AccNo>"));
+	try {
+		response = postXML(XMLBuilder.ViewRegVirAddr("0389010344822"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		response = postXML(XMLBuilder.ListRegPayee());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	String viraddr = response.substring(response.lastIndexOf("<java:VirAddr>")+14, response.lastIndexOf("</java:VirAddr>"));
+	try {
+		response = postXML(XMLBuilder.ReqValAddress("12345@utbi"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		response = postXML(XMLBuilder.sendmoney());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	
 }
+}
+
+	
 
 
 

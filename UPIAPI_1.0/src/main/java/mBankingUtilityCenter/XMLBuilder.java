@@ -111,7 +111,7 @@ public class XMLBuilder extends ExtentManager{
 			sb.append("<v:Envelope xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\">");
 			sb.append("<v:Header />");
 			sb.append("<v:Body>");
-			sb.append("<AddBank xmlns=\"http://com/fss/upi\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\" c:root=\"1\" id=\"o0\">");
+			sb.append("<AddBank xmlns=\"http://com/fss/upi\" id=\"o0\" c:root=\"1\">");
 			sb.append("<req>");
 			sb.append("<UPI>");
 			sb.append("<UserID i:type=\"d:string\">"+prop.getProperty("UserID")+"</UserID>");
@@ -119,7 +119,7 @@ public class XMLBuilder extends ExtentManager{
 			sb.append("<OrgId i:type=\"d:string\">"+prop.getProperty("OrgId")+"</OrgId>");
 			sb.append("<PayerType i:type=\"d:string\">"+prop.getProperty("PayerType")+"</PayerType>");
 			sb.append("<MobileNo i:type=\"d:string\">"+prop.getProperty("MobileNo")+"</MobileNo>");
-			sb.append("<Remarks i:type=\"d:string\"/>");
+			sb.append("<Remarks i:type=\"d:string\"></Remarks>");
 			sb.append("<PayerCode i:type=\"d:string\">"+prop.getProperty("PayerCode")+"</PayerCode>");
 			sb.append("<Channel i:type=\"d:string\">"+prop.getProperty("Channel")+"</Channel>");
 			sb.append("<AppVersion i:type=\"d:string\">"+prop.getProperty("AppVersion")+"</AppVersion>");
@@ -237,20 +237,20 @@ public class XMLBuilder extends ExtentManager{
 		
 			
 			//2
-			public static String ListBankAcc()
+			public static String ListBankAcc(String bankname)
 				{
 					StringBuilder sb = new StringBuilder();
 					sb.append("<v:Envelope xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\">");
 					sb.append("<v:Header />");
 					sb.append("<v:Body>");
-					sb.append("<ListBankAcc xmlns=\"http://com/fss/upi\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\" c:root=\"1\" id=\"o0\">");
+					sb.append("<ListBankAcc xmlns=\"http://com/fss/upi\" id=\"o0\" c:root=\"1\">");
 					sb.append("<req>");
-					sb.append("<CredType i:type=\"d:string\">CredType</CredType>");
+					sb.append("<CredType i:type=\"d:string\">"+prop.getProperty("CredType")+"</CredType>");
 					sb.append("<AddrType i:type=\"d:string\">"+prop.getProperty("AddrType")+"</AddrType>");
 					sb.append("<PayerCode i:type=\"d:string\">"+prop.getProperty("PayerCode")+"</PayerCode>");
-					sb.append("<BankName i:type=\"d:string\">"+prop.getProperty("BankName")+"</BankName>");
+					sb.append("<BankName i:type=\"d:string\">"+bankname+"</BankName>");
 					sb.append("<KeyCode i:type=\"d:string\">"+prop.getProperty("KeyCode")+"</KeyCode>");
-					sb.append("<OTP i:type=\"d:string\"/>");
+					sb.append("<OTP i:type=\"d:string\"></OTP>");
 					sb.append("<KeyIndex i:type=\"d:string\">"+prop.getProperty("KeyIndex")+"</KeyIndex>");
 					sb.append("<UPI>");
 					sb.append("<UserID i:type=\"d:string\">"+prop.getProperty("UserID")+"</UserID>");
@@ -258,7 +258,7 @@ public class XMLBuilder extends ExtentManager{
 					sb.append("<OrgId i:type=\"d:string\">"+prop.getProperty("OrgId")+"</OrgId>");
 					sb.append("<PayerType i:type=\"d:string\">"+prop.getProperty("PayerType")+"</PayerType>");
 					sb.append("<MobileNo i:type=\"d:string\">"+prop.getProperty("MobileNo")+"</MobileNo>");
-					sb.append("<Remarks i:type=\"d:string\"/>");
+					sb.append("<Remarks i:type=\"d:string\"></Remarks>");
 					sb.append("<PayerCode i:type=\"d:string\">"+prop.getProperty("PayerCode")+"</PayerCode>");
 					sb.append("<Channel i:type=\"d:string\">"+prop.getProperty("Channel")+"</Channel>");
 					sb.append("<AppVersion i:type=\"d:string\">"+prop.getProperty("AppVersion")+"</AppVersion>");
@@ -301,13 +301,13 @@ public class XMLBuilder extends ExtentManager{
 							sb.append("<DType i:type=\"d:string\"/>");
 							sb.append("<IFSC i:type=\"d:string\">"+prop.getProperty("IFSC")+"</IFSC>");
 							sb.append("<AccType i:type=\"d:string\">"+prop.getProperty("AccType")+"</AccType>");
-							sb.append("<AccRefNumber i:type=\"d:string\">"+prop.getProperty("AccRefNumber")+"</AccRefNumber>");
+							sb.append("<AccRefNumber i:type=\"d:string\">"+accno+"</AccRefNumber>");
 							sb.append("<VerifiedName i:type=\"d:string\">"+prop.getProperty("VerifiedName")+"</VerifiedName>");
 							sb.append("<MBEBA i:type=\"d:string\">N</MBEBA>");
 							sb.append("<AEBA i:type=\"d:string\">N</AEBA>");
 							sb.append("<BankName i:type=\"d:string\">"+prop.getProperty("BankName")+"</BankName>");
 							sb.append("<DLength i:type=\"d:string\"/>");
-							sb.append("<AccNo i:type=\"d:string\">"+accno+"</AccNo>");
+							sb.append("<AccNo i:type=\"d:string\">"+prop.getProperty("AccNo")+"</AccNo>");
 							sb.append("<UPI>");
 							sb.append("<UserID i:type=\"d:string\">"+prop.getProperty("UserID")+"</UserID>");
 							sb.append("<BankId i:type=\"d:string\">"+prop.getProperty("BankId")+"</BankId>");
@@ -545,7 +545,7 @@ public class XMLBuilder extends ExtentManager{
 				sb.append("<v:Envelope xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\">");
 				sb.append("<v:Header />");
 				sb.append("<v:Body>");
-				sb.append("<MobBankRegistration xmlns=\"http://com/fss/upi\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\" c:root=\"1\" id=\"o0\">");
+				sb.append("<MobBankRegistration xmlns=\"http://com/fss/upi\" id=\"o0\" c:root=\"1\">");
 						sb.append("<req>");
 						sb.append("<AddrType i:type=\"d:string\">"+prop.getProperty("AddrType")+"</AddrType>");
 						sb.append("<AccType i:type=\"d:string\">"+prop.getProperty("AccType")+"</AccType>");
@@ -847,23 +847,23 @@ public class XMLBuilder extends ExtentManager{
 						return sb.toString();
 		}
 
-		public static String BalanceInq(String accno,String pin) {
+		public static String BalanceInq(String accno) {
 			
 			StringBuilder sb = new StringBuilder();
 			sb.append("<v:Envelope xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\">");
 			sb.append("<v:Header />");
 			sb.append("<v:Body>");
-			 sb.append("<BalanceInq xmlns=\"http://com/fss/upi\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\" c:root=\"1\" id=\"o0\">");
+			 sb.append("<BalanceInq xmlns=\"http://com/fss/upi\" id=\"o0\" c:root=\"1\">");
 					  sb.append("<req>");
 					  sb.append("<DevIp i:type=\"d:string\">"+prop.getProperty("DevIp")+"</DevIp>");
 					  sb.append("<DevOs i:type=\"d:string\">"+prop.getProperty("DevOs")+"</DevOs>");
 					  sb.append("<DevId i:type=\"d:string\">"+prop.getProperty("DevId")+"</DevId>");
 					  sb.append("<DevApp i:type=\"d:string\">"+prop.getProperty("DevApp")+"</DevApp>");
-					  sb.append("<CredType i:type=\"d:string\">"+prop.getProperty("CredType")+"</CredType>");
+					  sb.append("<CredType i:type=\"d:string\">"+prop.getProperty("CredType1")+"</CredType>");
 					  sb.append("<AddrType i:type=\"d:string\">"+prop.getProperty("AddrType")+"</AddrType>");
 					  sb.append("<DevLocation i:type=\"d:string\">"+prop.getProperty("DevLocation")+"</DevLocation>");
 					  sb.append("<PayerCode i:type=\"d:string\">"+prop.getProperty("PayerCode")+"</PayerCode>");
-					  sb.append("<Pin i:type=\"d:string\">"+pin+"</Pin>");
+					  sb.append("<Pin i:type=\"d:string\">"+prop.getProperty("Pin")+"</Pin>");
 					  sb.append("<KeyCode i:type=\"d:string\">"+prop.getProperty("KeyCode")+"</KeyCode>");
 					  sb.append("<KeyIndex i:type=\"d:string\">"+prop.getProperty("KeyIndex")+"</KeyIndex>");
 					  sb.append("<AccNo i:type=\"d:string\">"+accno+"</AccNo>");
@@ -876,7 +876,7 @@ public class XMLBuilder extends ExtentManager{
 					  sb.append("<OrgId i:type=\"d:string\">"+prop.getProperty("OrgId")+"</OrgId>");
 					  sb.append("<PayerType i:type=\"d:string\">"+prop.getProperty("PayerType")+"</PayerType>");
 					  sb.append("<MobileNo i:type=\"d:string\">"+prop.getProperty("MobileNo")+"</MobileNo>");
-					  sb.append("<Remarks i:type=\"d:string\"/>");
+					  sb.append("<Remarks i:type=\"d:string\"></Remarks>");
 					  sb.append("<PayerCode i:type=\"d:string\">"+prop.getProperty("PayerCode")+"</PayerCode>");
 					  sb.append("<Channel i:type=\"d:string\">"+prop.getProperty("Channel")+"</Channel>");
 					  sb.append("<AppVersion i:type=\"d:string\">"+prop.getProperty("AppVersion")+"</AppVersion>");
@@ -992,23 +992,23 @@ public class XMLBuilder extends ExtentManager{
 			sb.append("<v:Envelope xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\">");
 			sb.append("<v:Header />");
 			sb.append("<v:Body>");
-			sb.append("<SendMoney xmlns=\"http://com/fss/upi\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\" c:root=\"1\" id=\"o0\">");
+			sb.append("<SendMoney xmlns=\"http://com/fss/upi\" id=\"o0\" c:root=\"1\">");
 					sb.append("<req>");
 					sb.append("<AddrType i:type=\"d:string\">"+prop.getProperty("AddrType")+"</AddrType>");
 					sb.append("<PayeeVirAddr i:type=\"d:string\">"+prop.getProperty("PayeeVirAddr")+"</PayeeVirAddr>");
 					sb.append("<ReqMethodType i:type=\"d:string\">"+prop.getProperty("ReqMethodType")+"</ReqMethodType>");
 					sb.append("<PayerCode i:type=\"d:string\">"+prop.getProperty("PayerCode")+"</PayerCode>");
-					sb.append("<NickName i:type=\"d:string\"/>");
 					sb.append("<Pin i:type=\"d:string\">"+prop.getProperty("Pin")+"</Pin>");
+					sb.append("<NickName i:type=\"d:string\"></NickName>");
 					sb.append("<PayeeName i:type=\"d:string\">"+prop.getProperty("PayeeName")+"</PayeeName>");
 					sb.append("<CurrencyCode i:type=\"d:string\">"+prop.getProperty("CurrencyCode")+"</CurrencyCode>");
 					sb.append("<payeeTranserType i:type=\"d:string\">"+prop.getProperty("payeeTranserType")+"</payeeTranserType>");
 					sb.append("<DevType i:type=\"d:string\">"+prop.getProperty("DevType")+"</DevType>");
-					sb.append("<DevOs i:type=\"d:string\">"+prop.getProperty("DevOs")+"</DevOs>");
 					sb.append("<DevIp i:type=\"d:string\">"+prop.getProperty("DevIp")+"</DevIp>");
+					sb.append("<DevOs i:type=\"d:string\">"+prop.getProperty("DevOs")+"</DevOs>");
 					sb.append("<DevId i:type=\"d:string\">"+prop.getProperty("DevId")+"</DevId>");
 					sb.append("<DevApp i:type=\"d:string\">"+prop.getProperty("DevApp")+"</DevApp>");
-					sb.append("<CredType i:type=\"d:string\">"+prop.getProperty("CredType")+"</CredType>");
+					sb.append("<CredType i:type=\"d:string\">"+prop.getProperty("CredType1")+"</CredType>");
 					sb.append("<PayerAccNo i:type=\"d:string\">"+prop.getProperty("PayerAccNo")+"</PayerAccNo>");
 					sb.append("<DevLocation i:type=\"d:string\">"+prop.getProperty("DevLocation")+"</DevLocation>");
 					sb.append("<PayeeCode i:type=\"d:string\">"+prop.getProperty("PayeeCode")+"</PayeeCode>");
@@ -1016,8 +1016,8 @@ public class XMLBuilder extends ExtentManager{
 					sb.append("<KeyCode i:type=\"d:string\">"+prop.getProperty("KeyCode")+"</KeyCode>");
 					sb.append("<KeyIndex i:type=\"d:string\">"+prop.getProperty("KeyIndex")+"</KeyIndex>");
 					sb.append("<PayerVirAddr i:type=\"d:string\">"+prop.getProperty("PayerVirAddr")+"</PayerVirAddr>");
-					sb.append("<DevCapability i:type=\"d:string\">"+prop.getProperty("DevCapability")+"</DevCapability>");
 					sb.append("<GeoCode i:type=\"d:string\">"+prop.getProperty("GeoCode")+"</GeoCode>");
+					sb.append("<DevCapability i:type=\"d:string\">"+prop.getProperty("DevCapability")+"</DevCapability>");
 					sb.append("<UPI>");
 					sb.append("<UserID i:type=\"d:string\">"+prop.getProperty("UserID")+"</UserID>");
 					sb.append("<BankId i:type=\"d:string\">"+prop.getProperty("BankId")+"</BankId>");
@@ -1165,7 +1165,7 @@ public class XMLBuilder extends ExtentManager{
 			sb.append("<v:Envelope xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\">");
 			sb.append("<v:Header />");
 			sb.append("<v:Body>");
-		         	sb.append("<RegisterPayee xmlns= \"http://com/fss/upi\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\" c:root=\"1\" id=\"o0\">");
+		         	sb.append("<RegisterPayee xmlns=\"http://com/fss/upi\" id=\"o0\" c:root=\"1\">");
 			        sb.append("<req>");
 			        sb.append("<PayeeTransferMode i:type=\"dstring\">"+prop.getProperty("PayeeTransferMode")+"</PayeeTransferMode>");
 			        sb.append("<PayeeNickName i:type=\"d:string\">"+prop.getProperty("PayeeNickName")+"</PayeeNickName>");
@@ -1198,20 +1198,21 @@ public class XMLBuilder extends ExtentManager{
 			sb.append("<v:Envelope xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\">");
 			sb.append("<v:Header />");
 			sb.append("<v:Body>");
-		         	sb.append("<RegisterPayee xmlns= \"http://com/fss/upi\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\" c:root=\"1\" id=\"o0\">");
+		         	sb.append("<RegisterPayee xmlns=\"http://com/fss/upi\" id=\"o0\" c:root=\"1\">");
 			        sb.append("<req>");
-			        sb.append("<PayeeTransferMode i:type=\"dstring\">"+prop.getProperty("PayeeTransferMode")+"</PayeeTransferMode>");
-			        sb.append("<PayeeNickName i:type=\"d:string\">"+prop.getProperty("PayeeNickName")+"</PayeeNickName>");
+			        sb.append("<PayeeTransferMode i:type=\"dstring\">"+prop.getProperty("PayeeTransferMode1")+"</PayeeTransferMode>");
 			        sb.append("<PayeeAccNo i:type=\"d:string\">"+prop.getProperty("PayeeAccNo")+"</PayeeAccNo>");
-			        sb.append("<PayeeIFSCCode i:type=\"d:string\">"+prop.getProperty("PayeeIFSCCode")+"</PayeeIFSCCode>");
+			        sb.append("<PayeeIfscCode i:type=\"d:string\">"+prop.getProperty("PayeeIfscCode")+"</PayeeIfscCode>");
 			        sb.append("<PayerCode i:type=\"d:string\">"+prop.getProperty("PayerCode")+"</PayerCode>");
+			        sb.append("<PayeeAccType i:type=\"d:string\">"+prop.getProperty("PayeeAccType")+"</PayeeAccType>");
+			        sb.append("<PayeeNickName i:type=\"d:string\">"+prop.getProperty("PayeeNickName")+"</PayeeNickName>");
 			        sb.append("<UPI>");
 					sb.append("<UserID i:type=\"d:string\">"+prop.getProperty("UserID")+"</UserID>");
 					sb.append("<BankId i:type=\"d:string\">"+prop.getProperty("BankId")+"</BankId>");
 					sb.append("<OrgId i:type=\"d:string\">"+prop.getProperty("OrgId")+"</OrgId>");
 					sb.append("<PayerType i:type=\"d:string\">"+prop.getProperty("PayerType")+"</PayerType>");
 					sb.append("<MobileNo i:type=\"d:string\">"+prop.getProperty("MobileNo")+"</MobileNo>");
-					sb.append("<Remarks i:type=\"d:string\"/>");
+					sb.append("<Remarks i:type=\"d:string\"></Remarks>");
 					sb.append("<PayerCode i:type=\"d:string\">"+prop.getProperty("PayerCode")+"</PayerCode>");
 					sb.append("<Channel i:type=\"d:string\">"+prop.getProperty("Channel")+"</Channel>");
 					sb.append("<AppVersion i:type=\"d:string\">"+prop.getProperty("AppVersion")+"</AppVersion>");
@@ -1221,7 +1222,7 @@ public class XMLBuilder extends ExtentManager{
 					sb.append("<TimeStamp i:type=\"d:string\">"+prop.getProperty("TimeStamp")+"</TimeStamp>");
 					sb.append("</UPI>");
 					sb.append("</req>");
-					sb.append("</ViewRegVirAddr>");
+					sb.append("</RegisterPayee>");
 					sb.append("</v:Body>");
 					sb.append( "</v:Envelope>");
 					return sb.toString();
@@ -1251,7 +1252,7 @@ public class XMLBuilder extends ExtentManager{
 					sb.append("<DevId i:type=\"d:string\">"+"ZY223JXPJX"+"</DevId>");
 					sb.append("<PayerName i:type=\"d:string\">"+"UNBI HOST ACCNT 3"+"</PayerName>");
 					sb.append("<DevApp i:type=\"d:string\">"+"com.fss.unbipsp"+"</DevApp>");
-					sb.append("<Expdate i:type=\"d:string\">"+"05-04-2018 20:13"+"</Expdate>");
+					sb.append("<Expdate i:type=\"d:string\">"+"05-04-2019 20:13"+"</Expdate>");
 					sb.append("<DevLocation i:type=\"d:string\">"+"Semmanjeri,India"+"</DevLocation>");
 					sb.append("<PayeeCode i:type=\"d:string\">"+"0000"+"</PayeeCode>");
 					sb.append("<Amount i:type=\"d:string\">"+"5.00"+"</Amount>");

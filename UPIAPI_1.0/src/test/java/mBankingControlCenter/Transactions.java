@@ -56,7 +56,7 @@ public class Transactions extends ExtentManager{
 	
 	@Test
 	public static void ListBankAcc() throws IOException, SQLException {
-		response = postXML(XMLBuilder.ListBankAcc());
+		response = postXML(XMLBuilder.ListBankAcc(accno));
 		if(dbReport=="Y")
 		{
 			Report.write(Db.fetchTxn(getTranID(response)));
@@ -157,7 +157,7 @@ public class Transactions extends ExtentManager{
 	@Test
 	public static void BalanceInq() throws IOException, SQLException {
 		
-		response = postXML(XMLBuilder.BalanceInq(accno,pin));
+		response = postXML(XMLBuilder.BalanceInq(accno));
 		assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
 	}
 	
@@ -209,15 +209,17 @@ public static void AddBankTransactionPositiveFlow() throws IOException,SQLExcept
 @Test(dependsOnMethods= ("AddBankTransactionPositiveFlow"))
 public static void AddBankTransactionExistingAccount() throws IOException,SQLException{
 			
-			response = HttpConnect.postXML(XMLBuilder.AddBank());
-			if (response.contains("000")) // check for element to present
-			{
-			String bankid = response.substring(response.lastIndexOf("<BankId>")+8, response.lastIndexOf("</BankId>"));		
-			response = postXML(XMLBuilder.ViewRegAccnts(bankid));
-			String accno = response.substring(response.lastIndexOf("<AccNo>")+7, response.lastIndexOf("</AccNo>"));
-			response = postXML(XMLBuilder.RegisterAcc(accno));
-     		assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
-			}
+	response = HttpConnect.postXML(XMLBuilder.AddBank());
+
+	if (response.contains("000")) // check for element to present
+	{
+	String bankname = response.substring(response.lastIndexOf("<java:BankName>")+8, response.lastIndexOf("|"));		
+		response = postXML(XMLBuilder.ListBankAcc("United Bank of India"));
+	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+7, response.lastIndexOf("</java:AccNo>"));
+		response = postXML(XMLBuilder.RegisterAcc(accno));
+		assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	}
+
 	}
 
 @Test
@@ -238,8 +240,8 @@ public static void AddBankTransactionWithInvalidAccNo() throws IOException,SQLEx
 @Test
 public static void AddVPATransactionPositiveFlow() throws IOException,SQLException{
 	response = postXML(XMLBuilder.ViewRegAccnts());
-	String accno = response.substring(response.lastIndexOf("<AccNo>")+7, response.lastIndexOf("</AccNo>"));
-	response = postXML(XMLBuilder.GenerateVirAddr(accno));
+	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+12, response.lastIndexOf("</java:AccNo>"));
+		response = postXML(XMLBuilder.GenerateVirAddr("0001000109354382"));
 	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
 	
 }
@@ -369,7 +371,7 @@ public static void ParticipantsTransactionInvalidPayeeAccountDetails() throws IO
 public static void BalanceEnquiryTransactionPositiveFlow()throws IOException,SQLException{
 	response = postXML(XMLBuilder.ViewRegAccnts());
 	String accno = response.substring(response.lastIndexOf("<AccNo>")+7, response.lastIndexOf("</AccNo>"));
-	response = postXML(XMLBuilder.BalanceInq(accno,prop.getProperty("InvPin")));
+	response = postXML(XMLBuilder.BalanceInq("0389010344822"));
 	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
 	
 }
@@ -378,7 +380,7 @@ public static void BalanceEnquiryTransactionPositiveFlow()throws IOException,SQL
 public static void BalanceEnquiryTransactionPinIsNotSetToAccount()throws IOException,SQLException{
 	response = postXML(XMLBuilder.ViewRegAccnts());
 	String accno = response.substring(response.lastIndexOf("<AccNo>")+7, response.lastIndexOf("</AccNo>"));
-	response = postXML(XMLBuilder.BalanceInq(accno,prop.getProperty("emptyPin")));
+	response = postXML(XMLBuilder.BalanceInq(accno));
 	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
 	
 }
@@ -387,7 +389,7 @@ public static void BalanceEnquiryTransactionPinIsNotSetToAccount()throws IOExcep
 public static void BalanceEnquiryTransactionInvalidPin()throws IOException,SQLException{
 	response = postXML(XMLBuilder.ViewRegAccnts());
 	String accno = response.substring(response.lastIndexOf("<AccNo>")+7, response.lastIndexOf("</AccNo>"));
-	response = postXML(XMLBuilder.BalanceInq(accno,prop.getProperty("InvPin")));
+	response = postXML(XMLBuilder.BalanceInq(accno));
 	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
 	
 }
@@ -396,6 +398,35 @@ public static void BalanceEnquiryTransactionInvalidPin()throws IOException,SQLEx
 
 @Test
 public static void SendMoneyTransactionPositiveFlowONUSWithVPA()throws IOException,SQLException{
+	
+	response = postXML(XMLBuilder.ViewRegAccnts());
+	String accno = response.substring(response.lastIndexOf("<AccNo ")+7, response.lastIndexOf("</AccNo>"));
+	response = postXML(XMLBuilder.ViewRegVirAddr(accno));
+	response = postXML(XMLBuilder.ListRegPayee());
+	String viraddr = response.substring(response.lastIndexOf("<PayeeVirAddr ")+14, response.lastIndexOf("</PayeeVirAddr>"));
+	response = postXML(XMLBuilder.ReqValAddress(viraddr));
+	response = postXML(XMLBuilder.sendmoney());
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	
+}
+
+
+@Test
+public static void SendMoneyTransactionPositiveFlowONUSWithAcc()throws IOException,SQLException{
+	
+	response = postXML(XMLBuilder.ViewRegAccnts());
+	String accno = response.substring(response.lastIndexOf("<AccNo ")+7, response.lastIndexOf("</AccNo>"));
+	response = postXML(XMLBuilder.ViewRegVirAddr(accno));
+	response = postXML(XMLBuilder.ListRegPayee());
+	String viraddr = response.substring(response.lastIndexOf("<PayeeVirAddr ")+14, response.lastIndexOf("</PayeeVirAddr>"));
+	response = postXML(XMLBuilder.ReqValAddress(viraddr));
+	response = postXML(XMLBuilder.sendmoney());
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	
+}
+
+@Test
+public static void SendMoneyTransactionPositiveFlowONUSWithAadhar()throws IOException,SQLException{
 	
 	response = postXML(XMLBuilder.ViewRegAccnts());
 	String accno = response.substring(response.lastIndexOf("<AccNo ")+7, response.lastIndexOf("</AccNo>"));
@@ -517,7 +548,27 @@ public static void SendMoneyTransactionOFFUSPinIsNotSet()throws IOException,SQLE
 
 
 @Test
-public static void CollectMoneyTransactionPositiveFlowONUS()throws IOException,SQLException{
+public static void CollectMoneyTransactionPositiveFlowONUSwithVPA()throws IOException,SQLException{
+	response = postXML(XMLBuilder.ListRegPayee());
+	String viraddr = response.substring(response.lastIndexOf("<PayeeVirAddr ")+14, response.lastIndexOf("</PayeeVirAddr>"));
+	response = postXML(XMLBuilder.ReqValAddress(viraddr));
+	response = postXML(XMLBuilder.CollectMoney());
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	
+}
+
+@Test
+public static void CollectMoneyTransactionPositiveFlowONUSwithAcc()throws IOException,SQLException{
+	response = postXML(XMLBuilder.ListRegPayee());
+	String viraddr = response.substring(response.lastIndexOf("<PayeeVirAddr ")+14, response.lastIndexOf("</PayeeVirAddr>"));
+	response = postXML(XMLBuilder.ReqValAddress(viraddr));
+	response = postXML(XMLBuilder.CollectMoney());
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	
+}
+
+@Test
+public static void CollectMoneyTransactionPositiveFlowONUSwithAadhar()throws IOException,SQLException{
 	response = postXML(XMLBuilder.ListRegPayee());
 	String viraddr = response.substring(response.lastIndexOf("<PayeeVirAddr ")+14, response.lastIndexOf("</PayeeVirAddr>"));
 	response = postXML(XMLBuilder.ReqValAddress(viraddr));
