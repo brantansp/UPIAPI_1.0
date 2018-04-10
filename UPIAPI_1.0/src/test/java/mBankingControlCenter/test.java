@@ -126,8 +126,8 @@ public static void main(String args[])
 	*/
 	
 	
-	/*try {
-		response = postXML(XMLBuilder.RegisterPayeeAcc());
+/*	try {
+		response = postXML(XMLBuilder.RegisterPayee());
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -152,7 +152,7 @@ public static void main(String args[])
 	}
 	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+12, response.lastIndexOf("</java:AccNo>"));
 	try {
-		response = postXML(XMLBuilder.BalanceInq("0389010502566"));
+		response = postXML(XMLBuilder.BalanceInq("0389010344822"));
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -160,7 +160,7 @@ public static void main(String args[])
 	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
 	*/
 	
-/*	try {
+/*try {
 		response = postXML(XMLBuilder.ViewRegAccnts());
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
@@ -193,9 +193,47 @@ public static void main(String args[])
 		e.printStackTrace();
 	}
 	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+*/
+	
+	
+/*	try {
+		response = postXML(XMLBuilder.ListRegPayee());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	String viraddr = response.substring(response.lastIndexOf("<PayeeVirAddr ")+14, response.lastIndexOf("</PayeeVirAddr>"));
+	try {
+		response = postXML(XMLBuilder.ReqValAddress("gjgfy87"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		response = postXML(XMLBuilder.CollectMoney());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
 	*/
 
+	/*try {
+		response = postXML(XMLBuilder.BalanceInq("0389010344822"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}*/
 	
+	try {
+		response = postXML(XMLBuilder.ReqValAddress("gjgfy87"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+
+
 }
 }
 
