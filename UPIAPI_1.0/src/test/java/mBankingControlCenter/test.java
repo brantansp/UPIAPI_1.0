@@ -54,32 +54,46 @@ public class test extends ExtentManager {
 	
 public static void main(String args[])
 {
-	/*try {
+/*	
 		response = HttpConnect.postXML(XMLBuilder.AddBank());
-	} catch (IOException e) {
+	
+
+	if (response.contains("000")) // check for element to present
+	{
+	String bankname = response.substring(response.lastIndexOf("<java:BankName>")+15, response.lastIndexOf("|"));		
+			response = postXML(XMLBuilder.ListBankAcc("United Bank of India"));
+	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+12, response.lastIndexOf("</java:AccNo>"));
+			response = postXML(XMLBuilder.RegisterAcc(accno));
+		assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	}*/
+	
+	
+/*	try {
+		response = HttpConnect.postXML(XMLBuilder.AddBank());
+	} catch (IOException e1) {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+		e1.printStackTrace();
 	}
 
 	if (response.contains("000")) // check for element to present
 	{
-	String bankname = response.substring(response.lastIndexOf("<java:BankName>")+8, response.lastIndexOf("|"));		
+		String bankname = response.substring(response.lastIndexOf("<java:BankName>")+15, response.lastIndexOf("|"));
 		try {
-			response = postXML(XMLBuilder.ListBankAcc("United Bank of India"));
+			response = postXML(XMLBuilder.ListBankAcc("Indian Bank"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+7, response.lastIndexOf("</java:AccNo>"));
+		String accno = response.substring(response.lastIndexOf("<java:AccNo>")+12, response.lastIndexOf("</java:AccNo>"));
 		try {
-			response = postXML(XMLBuilder.RegisterAcc(accno));
+			response = postXML(XMLBuilder.RegisterAcc(prop.getProperty("InvAccNo")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
-	}*/
-	
+	}
+	*/
 	
 	
 /*try {
@@ -224,14 +238,12 @@ public static void main(String args[])
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}*/
-	
 	try {
-		response = postXML(XMLBuilder.ReqValAddress("gjgfy87"));
+		response = postXML(XMLBuilder.ListBankAcc("Indian Bank"));
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	
 
 
 }

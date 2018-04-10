@@ -3,20 +3,79 @@
 <suite name = "Positive Transaction flow" >
 <listeners>
 <listener class-name="mBankingUtilityCenter.AnotationListner"></listener>
+<listener class-name="mBankingUtilityCenter.PriorityInterceptor" />
 </listeners>
-    <test name = "Non- FInancial transaction">
+
+<!--     <test name = "Non- FInancial transaction">
       <classes>
           <class name = "mBankingControlCenter.NonFinancialTransactions"/>
       </classes>        
-    </test>
-    <test name = "IMPSTransactions">
-      <classes>
-          <class name="mBankingControlCenter.IMPSTransactions" />
-      </classes>        
-    </test> 
-          <test name = "FundTransferTransactions">
+    </test>  -->
+    
+<!--           <test name = "FundTransferTransactions">
       <classes>
           <class name="mBankingControlCenter.FundTransferTransactions" />
       </classes>        
+    </test>  -->
+    
+    <test name = "AddBankTransaction">
+      <classes>
+          <class name = "mBankingControlCenter.AddBankTransaction"/>
+      </classes>        
+    </test>
+    
+ <!--     <test name = "AddVPATransaction">
+      <classes>
+          <class name = "mBankingControlCenter.AddVPATransaction"/>
+      </classes>        
+    </test>  -->
+    
+<!--     <test name = "BalanceEnquiryTransaction">
+      <classes>
+          <class name = "mBankingControlCenter.BalanceEnquiryTransaction"/>
+      </classes>        
+    </test> -->
+    
+<!--     <test name = "ChangeUPIPinTransaction">
+      <classes>
+          <class name = "mBankingControlCenter.ChangeUPIPinTransaction"/>
+      </classes>        
+    </test> -->
+    
+<!--     <test name = "CollectMoneyAndPendingApprovalTransaction.java">
+      <classes>
+          <class name = "mBankingControlCenter.CollectMoneyAndPendingApprovalTransaction"/>
+      </classes>        
+    </test> -->
+    
+<!--     <test name = "ManageAccountsTransaction">
+      <classes>
+          <class name = "mBankingControlCenter.ManageAccountsTransaction.java"/>
+      </classes>        
+    </test> -->
+    
+    <test name = "Participants">
+      <classes>
+          <class name = "mBankingControlCenter.Participants"/>
+      </classes>        
     </test> 
+<!--     
+    <test name = "SendMoneyTransaction">
+      <classes>
+          <class name = "mBankingControlCenter.SendMoneyTransaction"/>
+      </classes>        
+    </test>  -->
+    
+<!--     <test name = "SetUPIPinTransaction">
+      <classes>
+          <class name = "mBankingControlCenter.SetUPIPinTransaction"/>
+      </classes>        
+    </test> -->
+    
+<!--         <test name = "TransactionStatusTransaction">
+      <classes>
+          <class name = "mBankingControlCenter.TransactionStatusTransaction"/>
+      </classes>        
+    </test> -->
+    
 </suite>
