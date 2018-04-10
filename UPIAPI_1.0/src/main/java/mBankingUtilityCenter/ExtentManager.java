@@ -18,7 +18,10 @@ import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -55,6 +58,8 @@ public class ExtentManager{
 	protected static Log log = LogFactory.getLog(MethodHandles.lookup().lookupClass().getSimpleName());
 	public static Properties prop=getProperty();
 	static String reportPath;
+	private static Connection dbConnection = null;
+	private static Statement statement = null;
 	SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd"); 
 	SimpleDateFormat timeFormatter = new SimpleDateFormat("HHmmss"); 
 	Date date = new Date();  
@@ -143,6 +148,26 @@ public class ExtentManager{
                 } 
                 sc.close();
     */}
+	
+	public static String encPin()
+	{
+		prop =getProperty();
+		String selectTableSQL = "select  MODULUS from UPI_Registration where cust_mobile_no = '+91"+ prop.getProperty("MobileNo")+"'";
+		dbConnection = Db.getDBConnection(prop.getProperty("DB_USER") , prop.getProperty("DB_PASSWORD"));
+		String modulus = null;
+		try {
+			statement = dbConnection.createStatement();
+			ResultSet resultSet= statement.executeQuery(selectTableSQL);
+			resultSet.next();
+			modulus = resultSet.getString("MODULUS");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//System.out.println(RsaEncryption.encrypt(prop.getProperty("mPINPlain"), modulus));
+		String encryptedPin = RsaEncryption.encrypt(prop.getProperty("mPINPlain"), modulus);
+        return encryptedPin;
+	}
 	
 	public static Properties getProperty()
 	{
