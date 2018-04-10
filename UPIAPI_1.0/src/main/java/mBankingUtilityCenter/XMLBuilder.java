@@ -499,7 +499,7 @@ public class XMLBuilder extends ExtentManager{
 				sb.append("<v:Envelope xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\">");
 				sb.append("<v:Header />");
 				sb.append("<v:Body>");
-				sb.append("<GenerateBankOTP xmlns=\"http://com/fss/upi\" xmlns:c=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:d=\"http://www.w3.org/1999/XMLSchema\" xmlns:i=\"http://www.w3.org/1999/XMLSchema-instance\" xmlns:v=\"http://schemas.xmlsoap.org/soap/envelope/\" c:root=\"1\" id=\"o0\">");
+				sb.append("<GenerateBankOTP xmlns=\"http://com/fss/upi\" id=\"o0\" c:root=\"1\">");
 						sb.append("<req>");
 						sb.append("<DevIp i:type=\"d:string\">"+prop.getProperty("DevIp")+"</DevIp>");
 						sb.append("<DevOs i:type=\"d:string\">"+prop.getProperty("DevOs")+"</DevOs>");
@@ -554,11 +554,11 @@ public class XMLBuilder extends ExtentManager{
 						sb.append("<DevType i:type=\"d:string\">"+prop.getProperty("DevType")+"</DevType>");
 						sb.append("<DevIp i:type=\"d:string\">"+prop.getProperty("DevIp")+"</DevIp>");
 						sb.append("<DevOs i:type=\"d:string\">"+prop.getProperty("DevOs")+"</DevOs>");
-						sb.append("<ATMPIN i:type=\"d:string\"/>");
+						sb.append("<ATMPIN i:type=\"d:string\"></ATMPIN>");
 						sb.append("<IFSC i:type=\"d:string\">"+prop.getProperty("IFSC")+"</IFSC>");
 						sb.append("<DevId i:type=\"d:string\">"+prop.getProperty("DevId")+"</DevId>");
 						sb.append("<DevApp i:type=\"d:string\">"+prop.getProperty("DevApp")+"</DevApp>");
-						sb.append("<CredType i:type=\"d:string\">"+prop.getProperty("CredType")+"</CredType>");
+						sb.append("<CredType i:type=\"d:string\">"+prop.getProperty("CredType1")+"</CredType>");
 						sb.append("<DevLocation i:type=\"d:string\">"+prop.getProperty("DevLocation")+"</DevLocation>");
 						sb.append("<PayerAccNo i:type=\"d:string\">"+prop.getProperty("PayerAccNo")+"</PayerAccNo>");
 						sb.append("<PIN i:type=\"d:string\">"+prop.getProperty("PIN")+"</PIN>");
@@ -574,7 +574,7 @@ public class XMLBuilder extends ExtentManager{
 						sb.append("<OrgId i:type=\"d:string\">"+prop.getProperty("OrgId")+"</OrgId>");
 						sb.append("<PayerType i:type=\"d:string\">"+prop.getProperty("PayerType")+"</PayerType>");
 						sb.append("<MobileNo i:type=\"d:string\">"+prop.getProperty("MobileNo")+"</MobileNo>");
-						sb.append("<Remarks i:type=\"d:string\"/>");
+						sb.append("<Remarks i:type=\"d:string\"></Remarks>");
 						sb.append("<PayerCode i:type=\"d:string\">"+prop.getProperty("PayerCode")+"</PayerCode>");
 						sb.append("<Channel i:type=\"d:string\">"+prop.getProperty("Channel")+"</Channel>");
 						sb.append("<AppVersion i:type=\"d:string\">"+prop.getProperty("AppVersion")+"</AppVersion>");

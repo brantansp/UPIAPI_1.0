@@ -96,21 +96,15 @@ public static void main(String args[])
 			e.printStackTrace();
 		}
 	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
-	*/
+*/
 	
-/*	try {
-		response = postXML(XMLBuilder.ViewRegAccnts());
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+	/*	response = postXML(XMLBuilder.ViewRegAccnts());
+
 	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+12, response.lastIndexOf("</java:AccNo>"));
-	try {
-		response = postXML(XMLBuilder.MobBankRegistration("0389010344822"));
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+			response = postXML(XMLBuilder.GenerateBankOTP("0389010344822"));
+			response = postXML(XMLBuilder.MobBankRegistration("0389010344822"));
+	
+
 	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
 	*/
 	
@@ -166,7 +160,7 @@ public static void main(String args[])
 	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
 	*/
 	
-	try {
+/*	try {
 		response = postXML(XMLBuilder.ViewRegAccnts());
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
@@ -199,6 +193,8 @@ public static void main(String args[])
 		e.printStackTrace();
 	}
 	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
+	*/
+
 	
 }
 }

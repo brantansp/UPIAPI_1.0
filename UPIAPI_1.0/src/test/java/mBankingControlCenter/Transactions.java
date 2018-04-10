@@ -259,8 +259,9 @@ public static void AddVPATransactionAddingExistingVPA() throws IOException,SQLEx
 @Test
 public static void SetUPIPinTransactionPositiveFlow() throws IOException,SQLException{
 	response = postXML(XMLBuilder.ViewRegAccnts());
-	String accno = response.substring(response.lastIndexOf("<AccNo>")+7, response.lastIndexOf("</AccNo>"));
-	response = postXML(XMLBuilder.MobBankRegistration(accno));
+	String accno = response.substring(response.lastIndexOf("<java:AccNo>")+12, response.lastIndexOf("</java:AccNo>"));
+			response = postXML(XMLBuilder.GenerateBankOTP("0389010344822"));
+			response = postXML(XMLBuilder.MobBankRegistration("0389010344822"));
 	assertTrue (response.substring(response.lastIndexOf("<java:ResCode>")+14, response.lastIndexOf("</java:ResCode>")).contains("000"));
 	
 }
