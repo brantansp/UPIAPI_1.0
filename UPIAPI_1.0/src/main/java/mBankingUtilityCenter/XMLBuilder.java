@@ -28,6 +28,7 @@ public class XMLBuilder extends ExtentManager{
 	 */
 	protected static Properties prop=getProperty();
 
+	protected static String encryptedPIN = encPin();
 	
 	/*
 	 * To get the parameterized request template from static store for UPI block
