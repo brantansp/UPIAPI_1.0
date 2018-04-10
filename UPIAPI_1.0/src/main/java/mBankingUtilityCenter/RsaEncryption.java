@@ -47,9 +47,18 @@ public class RsaEncryption {
 		 return newEnc.cipherText;
 	}
 	
+	public static String encrypt(String pin, String modulus)
+	{//203577465141885203944391850079714410739
+		RsaEncryption newEnc = new RsaEncryption(pin , modulus);
+		//RSADecryptionNEW dec=new RSADecryptionNEW();
+		 //System.out.println(newEnc.cipherText);
+		 return newEnc.cipherText;
+	}
+	
 	public static void main(String[] args) {
 		//RsaEncryption newEnc = new RsaEncryption("1111","203577465141885203944391850079714410739");
 		//RSADecryptionNEW dec=new RSADecryptionNEW();
 		 System.out.println(encrypt("2580"));
+		 System.out.println(encrypt("2222", "131309369321510784120473755170419681821"));
 }
 }
